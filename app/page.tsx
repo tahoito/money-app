@@ -72,6 +72,43 @@ export default function Home() {
               </p>
             </div>
 
+            <div className="border-t border-line" />
+
+            <div className="flex items-center justify-between py-3">
+              <div>
+                <p className="font-medium">
+                  Grab
+                </p>
+
+                <p className="text-sm text-text-sub">
+                  Aug 5 ・ Transport ・ Abi
+                </p>
+              </div>
+
+              <p className="font-semibold text-primary">
+                RM 15.00
+              </p>
+            </div>
+
+
+            <div className="border-t border-line" />
+
+            <div className="flex items-center justify-between py-3">
+              <div>
+                <p className="font-medium">
+                  Grab
+                </p>
+
+                <p className="text-sm text-text-sub">
+                  Aug 5 ・ Transport ・ Abi
+                </p>
+              </div>
+
+              <p className="font-semibold text-primary">
+                RM 15.00
+              </p>
+            </div>
+
           </div>
         </section>
 
