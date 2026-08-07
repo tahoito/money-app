@@ -38,7 +38,7 @@ export default function BottomNavigation() {
             className="flex flex-col items-center gap-1"
           >
             <Icon
-              className={`h-6 w-6 ${
+              className={`h-7 w-7 ${
                 active ? "text-primary" : "text-text-sub"
               }`}
             />
