@@ -1,5 +1,4 @@
 import {
-    ChevronLeft,
     ChevronDown,
     Tag,
     User,
@@ -20,7 +19,7 @@ export default function Add() {
                 <div className="mt-8">
                     {/* Date */}
                     <div>
-                        <label className="mb-2 block text-sm font-medium text-text-main">
+                        <label className="mb-2 block text-sm font-medium text-white">
                             Date
                         </label>
 
@@ -32,7 +31,7 @@ export default function Add() {
 
                     {/* Spend */}
                     <div className="mt-5">
-                        <label className="mb-2 block text-sm font-medium text-text-main">
+                        <label className="mb-2 block text-sm font-medium text-white">
                             What did you spend on?
                         </label>
 
@@ -45,7 +44,7 @@ export default function Add() {
 
                     {/* Amount */}
                     <div className="mt-5">
-                        <label className="mb-2 block text-sm font-medium text-text-main">
+                        <label className="mb-2 block text-sm font-medium text-white">
                             Amount
                         </label>
 
@@ -64,7 +63,7 @@ export default function Add() {
 
                     {/* Category */}
                     <div className="mt-5">
-                        <label className="mb-2 block text-sm font-medium text-text-main">
+                        <label className="mb-2 block text-sm font-medium text-white">
                             Category
                         </label>
 
@@ -88,7 +87,7 @@ export default function Add() {
 
                     {/* Paid by */}
                     <div className="mt-5">
-                        <label className="mb-2 block text-sm font-medium text-text-main">
+                        <label className="mb-2 block text-sm font-medium text-white">
                             Paid by
                         </label>
 
@@ -100,7 +99,7 @@ export default function Add() {
                                 className="w-full appearance-none rounded-xl border border-line bg-surface py-3 pl-11 pr-11 text-sm text-text-main outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                             >
                                 <option>Taho</option>
-                                <option>Abdullah</option>
+                                <option>Abi</option>
                             </select>
 
                             <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-text-sub" />
@@ -109,7 +108,7 @@ export default function Add() {
 
                     {/* Note */}
                     <div className="mt-5">
-                        <label className="mb-2 block text-sm font-medium text-text-main">
+                        <label className="mb-2 block text-sm font-medium text-white">
                             Note
                             <span className="ml-1 font-normal text-text-sub">
                                 (optional)

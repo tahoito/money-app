@@ -5,7 +5,7 @@ export default function Home() {
 
         <header>
           <h1 className="mt-1 text-3xl font-bold text-white">
-            Augtst
+            Augutst
           </h1>
         </header>
 
