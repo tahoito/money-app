@@ -9,8 +9,8 @@ export default function Add() {
         <main className="min-h-screen bg-base px-5 pb-28 pt-6">
             <div className="mx-auto w-full max-w-md">
                 {/* Header */}
-                <header>
-                    <h1 className="mt-1 text-3xl font-bold text-white text-center">
+                <header className="relative flex items-center justify-center">
+                    <h1 className="text-xl font-semibold text-text-main">
                         Add Expense
                     </h1>
                 </header>
