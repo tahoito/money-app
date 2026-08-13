@@ -3,8 +3,21 @@ import {
     Tag,
     User,
 } from "lucide-react";
+import { sql } from "@/lib/db";
 
-export default function Add() {
+export default async function Add() {
+    const categories = await sql`
+        SELECT id, name 
+        FROM categories
+        ORDER BY id;
+    `;
+
+    const users = await sql`
+        SELECT id, name
+        FROM users
+        ORDER BY id ;
+    `;
+
     return (
         <main className="min-h-screen bg-base px-5 pb-28 pt-6">
             <div className="mx-auto w-full max-w-md">
@@ -15,7 +28,6 @@ export default function Add() {
                     </h1>
                 </header>
 
-                {/* Form */}
                 <div className="mt-8">
                     {/* Date */}
                     <div>
@@ -71,14 +83,17 @@ export default function Add() {
                             <Tag className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-text-sub" />
 
                             <select
-                                defaultValue="Food"
+                                name="category_id"
                                 className="w-full appearance-none rounded-xl border border-line bg-surface py-3 pl-11 pr-11 text-sm text-text-main outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                             >
-                                <option>Food</option>
-                                <option>Transport</option>
-                                <option>Shopping</option>
-                                <option>Entertainment</option>
-                                <option>Other</option>
+                                {categories.map((category) => (
+                                    <option 
+                                        key={category.id}
+                                        value={category.id}
+                                    >
+                                        {category.name}
+                                    </option>
+                                ))}
                             </select>
 
                             <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-text-sub" />
@@ -95,11 +110,17 @@ export default function Add() {
                             <User className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-text-sub" />
 
                             <select
-                                defaultValue="Taho"
+                                name="paid_by"
                                 className="w-full appearance-none rounded-xl border border-line bg-surface py-3 pl-11 pr-11 text-sm text-text-main outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                             >
-                                <option>Taho</option>
-                                <option>Abi</option>
+                                {users.map((user) => (
+                                    <option
+                                        key={user.id}
+                                        value={user.id}
+                                    >
+                                        {user.name}
+                                    </option>
+                                ))}
                             </select>
 
                             <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-text-sub" />
@@ -124,7 +145,7 @@ export default function Add() {
 
                     {/* Save */}
                     <button
-                        type="button"
+                        type="submit"
                         className="mt-6 w-full rounded-xl bg-primary py-3.5 text-sm font-semibold text-white transition hover:bg-primary-hover active:scale-[0.99]"
                     >
                         Save
@@ -132,5 +153,8 @@ export default function Add() {
                 </div>
             </div>
         </main>
-    );
+    )
 }
+
+
+
