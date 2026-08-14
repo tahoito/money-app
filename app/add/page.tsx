@@ -4,8 +4,10 @@ import {
     User,
 } from "lucide-react";
 import { sql } from "@/lib/db";
+import { createExpense } from "./actions";
 
 export default async function Add() {
+    const today = new Date().toISOString().split("T")[0];
     const categories = await sql`
         SELECT id, name 
         FROM categories
@@ -28,7 +30,7 @@ export default async function Add() {
                     </h1>
                 </header>
 
-                <div className="mt-8">
+                <form action={createExpense} className="mt-8">
                     {/* Date */}
                     <div>
                         <label className="mb-2 block text-sm font-medium text-white">
@@ -36,7 +38,8 @@ export default async function Add() {
                         </label>
 
                         <input
-                            type="date"
+                            type="date" name="date"
+                            defaultValue={today}
                             className="w-full rounded-xl border border-line bg-surface px-4 py-3 text-sm text-text-main outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                         />
                     </div>
@@ -48,7 +51,7 @@ export default async function Add() {
                         </label>
 
                         <input
-                            type="text"
+                            type="text" name="title"
                             placeholder="Dinner, Grab, Movie..."
                             className="w-full rounded-xl border border-line bg-surface px-4 py-3 text-sm text-text-main placeholder:text-text-sub outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                         />
@@ -66,7 +69,7 @@ export default async function Add() {
                             </span>
 
                             <input
-                                type="number"
+                                type="number" name="amount"
                                 placeholder="0.00"
                                 className="w-full bg-transparent py-3 pr-4 text-sm text-text-main placeholder:text-text-sub outline-none"
                             />
@@ -83,7 +86,7 @@ export default async function Add() {
                             <Tag className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-text-sub" />
 
                             <select
-                                name="category_id"
+                                name="category_id" 
                                 className="w-full appearance-none rounded-xl border border-line bg-surface py-3 pl-11 pr-11 text-sm text-text-main outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                             >
                                 {categories.map((category) => (
@@ -137,7 +140,7 @@ export default async function Add() {
                         </label>
 
                         <textarea
-                            rows={3}
+                            rows={3} name="note"
                             placeholder="Add a note..."
                             className="w-full resize-none rounded-xl border border-line bg-surface px-4 py-3 text-sm text-text-main placeholder:text-text-sub outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                         />
@@ -150,7 +153,7 @@ export default async function Add() {
                     >
                         Save
                     </button>
-                </div>
+                </form>
             </div>
         </main>
     )
