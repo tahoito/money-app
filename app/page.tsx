@@ -1,4 +1,22 @@
-export default function Home() {
+import { sql } from "@/lib/db";
+
+export default async function Home() {
+  const expenses = await sql`
+    SELECT 
+      expenses.id, 
+      expenses.date, 
+      expenses.title, 
+      expenses.amount, 
+      categories.name AS category,
+            users.name AS paid_by
+        FROM expenses
+        JOIN categories
+            ON expenses.category_id = categories.id
+        JOIN users
+            ON expenses.paid_by = users.id
+        ORDER BY expenses.date DESC;
+  `;
+
   return (
     <div className="min-h-screen bg-base text-text-main">
       <div className="mx-auto max-w-md px-5 py-8">
@@ -37,81 +55,41 @@ export default function Home() {
           </h3>
 
           <div className="mt-4 border-t border-line pt-4">
-
-            <div className="flex items-center justify-between py-3">
-              <div>
-                <p className="font-medium">
-                  Dinner
-                </p>
-
-                <p className="text-sm text-text-sub">
-                  Aug 6 ・ Food ・ Taho
-                </p>
-              </div>
-
-              <p className="font-semibold text-primary">
-                RM 48.00
+            {expenses.length === 0 ? (
+              <p className="py-6 text-center text-sm text-text-sub">
+                No expenses yet
               </p>
-            </div>
+            ) : (
+              expenses.map((expense, index) => {
+                const date = new Date(expense.date);
 
-            <div className="border-t border-line" />
+                const formattedDate = date.toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                });
 
-            <div className="flex items-center justify-between py-3">
-              <div>
-                <p className="font-medium">
-                  Grab
-                </p>
-
-                <p className="text-sm text-text-sub">
-                  Aug 5 ・ Transport ・ Abi
-                </p>
-              </div>
-
-              <p className="font-semibold text-primary">
-                RM 15.00
-              </p>
-            </div>
-
-            <div className="border-t border-line" />
-
-            <div className="flex items-center justify-between py-3">
-              <div>
-                <p className="font-medium">
-                  Grab
-                </p>
-
-                <p className="text-sm text-text-sub">
-                  Aug 5 ・ Transport ・ Abi
-                </p>
-              </div>
-
-              <p className="font-semibold text-primary">
-                RM 15.00
-              </p>
-            </div>
-
-
-            <div className="border-t border-line" />
-
-            <div className="flex items-center justify-between py-3">
-              <div>
-                <p className="font-medium">
-                  Grab
-                </p>
-
-                <p className="text-sm text-text-sub">
-                  Aug 5 ・ Transport ・ Abi
-                </p>
-              </div>
-
-              <p className="font-semibold text-primary">
-                RM 15.00
-              </p>
-            </div>
-
+                return(
+                  <div key={expense.id}>
+                    <div className="flex items-center justify-between py-3">
+                      <p className="font-medium text-text-main">
+                        {expense.title}
+                      </p>
+                      <p className="text-sm text-text-sub">
+                        {formattedDate} ・ {expense.category} ・ {expense.paid_by}
+                      </p>
+                    </div>
+                    <p className="font-semibold text-primary">
+                      RM {Number(expense.amount).toFixed(2)}
+                    </p>
+                    {index !== expenses.length -1 && (
+                      <div className="border-t border-line" />
+                    )}
+                  </div>
+                );
+              })
+            )}
           </div>
         </section>
-
       </div>
     </div>
   );
