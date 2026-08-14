@@ -1,6 +1,6 @@
 import { sql } from "@/lib/db";
 
-export default async function Home() {
+export default async function Home() {  
   const expenses = await sql`
     SELECT 
       expenses.id, 
@@ -16,6 +16,14 @@ export default async function Home() {
             ON expenses.paid_by = users.id
         ORDER BY expenses.date DESC;
   `;
+
+  const totalResult = await sql`
+    SELECT COALESCE(SUM(amount),0 ) AS total
+    FROM expenses
+    WHERE DATE_TRUNC('month', date) = DATE_TRUNC('month', CURRENT_DATE);
+  `; 
+
+  const monthlyTotal = Number(totalResult[0].total);
 
   return (
     <div className="min-h-screen bg-base text-text-main">
@@ -33,7 +41,7 @@ export default async function Home() {
           </p>
 
           <h2 className="mt-2 text-4xl font-semibold">
-            RM 100.89
+            RM {monthlyTotal}
           </h2>
         </section>
 
@@ -68,24 +76,33 @@ export default async function Home() {
                   day: "numeric",
                 });
 
-                return(
+                return (
                   <div key={expense.id}>
-                    <div className="flex items-center justify-between py-3">
-                      <p className="font-medium text-text-main">
-                        {expense.title}
-                      </p>
-                      <p className="text-sm text-text-sub">
-                        {formattedDate} ・ {expense.category} ・ {expense.paid_by}
-                      </p>
-                    </div>
-                    <p className="font-semibold text-primary">
-                      RM {Number(expense.amount).toFixed(2)}
-                    </p>
-                    {index !== expenses.length -1 && (
-                      <div className="border-t border-line" />
-                    )}
+                      <div className="flex items-center justify-between gap-4 py-3">
+                          
+                          {/* Left */}
+                          <div className="min-w-0">
+                              <p className="truncate font-medium text-text-main">
+                                  {expense.title}
+                              </p>
+
+                              <p className="mt-1 text-xs text-text-sub">
+                                  {formattedDate} ・ {expense.category} ・ {expense.paid_by}
+                              </p>
+                          </div>
+
+                          {/* Right */}
+                          <p className="shrink-0 font-semibold text-primary">
+                              RM {Number(expense.amount).toFixed(2)}
+                          </p>
+
+                      </div>
+
+                      {index !== expenses.length - 1 && (
+                          <div className="border-t border-line" />
+                      )}
                   </div>
-                );
+              );
               })
             )}
           </div>
