@@ -17,6 +17,20 @@ export default async function Home() {
         ORDER BY expenses.date DESC;
   `;
 
+  const categoryTotals = await sql`
+    SELECT 
+      categories.name AS category,
+      COALESCE(SUM(expenses.amount), 0) AS total
+    FROM categories
+    LEFT JOIN expenses
+      ON categories.id = expenses.category_id
+      AND DATE_TRUNC('month', expenses.date)
+            = DATE_TRUNC('month', CURRENT_DATE)
+    GROUP BY categories.id, categories.name
+    ORDER BY categories.id;
+
+  `;
+
   const totalResult = await sql`
     SELECT COALESCE(SUM(amount),0 ) AS total
     FROM expenses
@@ -24,6 +38,19 @@ export default async function Home() {
   `; 
 
   const monthlyTotal = Number(totalResult[0].total);
+
+  const categoryData = categoryTotals.map((item) => {
+    const total = Number(item.total);
+    const percentage = 
+      monthlyTotal > 0
+        ? (total / monthlyTotal) * 100
+        : 0;
+    return {
+      category: item.category,
+      total,
+      percentage
+    };
+  });
 
   return (
     <div className="min-h-screen bg-base text-text-main">
@@ -52,7 +79,28 @@ export default async function Home() {
 
           <div className="mt-5 flex h-56 items-center justify-center rounded-2xl border border-dashed border-line bg-base/10">
             <span className="text-text-sub">
-              Pie Chart
+              <div className="mt-4 space-y-3">
+                  {categoryData.map((item) => (
+                      <div
+                          key={item.category}
+                          className="flex items-center justify-between"
+                      >
+                          <span className="text-sm text-text-main">
+                              {item.category}
+                          </span>
+
+                          <div className="text-right">
+                              <p className="text-sm font-medium text-text-main">
+                                  RM {item.total.toFixed(2)}
+                              </p>
+
+                              <p className="text-xs text-text-sub">
+                                  {item.percentage.toFixed(0)}%
+                              </p>
+                          </div>
+                      </div>
+                  ))}
+              </div>
             </span>
           </div>
         </section>
