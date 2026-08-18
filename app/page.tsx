@@ -1,5 +1,7 @@
 import { sql } from "@/lib/db";
 import CategoryPieChart from "@/components/CategoryPieChart";
+import AddedToast from "@/components/AddedToast";
+
 export default async function Home() {  
   const expenses = await sql`
     SELECT 
@@ -54,6 +56,7 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-base text-text-main">
+      <AddedToast />
       <div className="mx-auto max-w-md px-5 py-8">
 
         <header>
@@ -77,12 +80,8 @@ export default async function Home() {
             Category
           </p>
 
-          <div className="mt-5 flex h-56 items-center justify-center rounded-2xl border border-dashed border-line bg-base/10">
-            <span className="text-text-sub">
-              <div className="mt-4 space-y-3">
-                  <CategoryPieChart data={categoryData} />
-              </div>
-            </span>
+          <div className="mt-2 h-56 w-full">
+              <CategoryPieChart data={categoryData} />
           </div>
         </section>
 

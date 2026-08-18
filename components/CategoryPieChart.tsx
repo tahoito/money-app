@@ -29,16 +29,8 @@ export default function CategoryPieChart({
 }) {
     const chartData = data.filter((item) => item.total > 0);
 
-    if (chartData.length === 0) {
-        return (
-            <div className="flex h-52 items-center justify-center text-sm text-text-sub">
-                No expense data
-            </div>
-        );
-    }
-
     return (
-        <div className="h-52 w-full">
+        <div className="h-[220px] w-full">
             <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                     <Pie
@@ -49,7 +41,6 @@ export default function CategoryPieChart({
                         cy="50%"
                         innerRadius={45}
                         outerRadius={75}
-                        paddingAngle={2}
                     >
                         {chartData.map((item, index) => (
                             <Cell

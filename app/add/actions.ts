@@ -2,6 +2,7 @@
 
 import { sql } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createExpense(formData: FormData) {
     const date = formData.get("date") as string;
@@ -31,4 +32,5 @@ export async function createExpense(formData: FormData) {
     `;
 
     revalidatePath("/");
+    redirect("/?added=true");
 }
