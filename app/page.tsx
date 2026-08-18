@@ -1,5 +1,5 @@
 import { sql } from "@/lib/db";
-
+import CategoryPieChart from "@/components/CategoryPieChart";
 export default async function Home() {  
   const expenses = await sql`
     SELECT 
@@ -80,26 +80,7 @@ export default async function Home() {
           <div className="mt-5 flex h-56 items-center justify-center rounded-2xl border border-dashed border-line bg-base/10">
             <span className="text-text-sub">
               <div className="mt-4 space-y-3">
-                  {categoryData.map((item) => (
-                      <div
-                          key={item.category}
-                          className="flex items-center justify-between"
-                      >
-                          <span className="text-sm text-text-main">
-                              {item.category}
-                          </span>
-
-                          <div className="text-right">
-                              <p className="text-sm font-medium text-text-main">
-                                  RM {item.total.toFixed(2)}
-                              </p>
-
-                              <p className="text-xs text-text-sub">
-                                  {item.percentage.toFixed(0)}%
-                              </p>
-                          </div>
-                      </div>
-                  ))}
+                  <CategoryPieChart data={categoryData} />
               </div>
             </span>
           </div>
