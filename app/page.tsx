@@ -80,8 +80,8 @@ export default async function Home() {
             Category
           </p>
 
-          <div className="mt-2 h-56 w-full">
-              <CategoryPieChart data={categoryData} />
+          <div className="mt-5 w-full">
+            <CategoryPieChart data={categoryData} />
           </div>
         </section>
 

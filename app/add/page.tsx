@@ -69,7 +69,10 @@ export default async function Add() {
                             </span>
 
                             <input
-                                type="number" name="amount"
+                                type="number"
+                                name="amount"
+                                step="0.01"
+                                min="0"
                                 placeholder="0.00"
                                 className="w-full bg-transparent py-3 pr-4 text-sm text-text-main placeholder:text-text-sub outline-none"
                             />
