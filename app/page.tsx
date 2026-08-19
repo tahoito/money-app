@@ -54,88 +54,92 @@ export default async function Home() {
     };
   });
 
+  const currentMonth = new Date().toLocaleDateString("en-US", {
+    month: "long",
+  }); 
+
   return (
     <div className="min-h-screen bg-base text-text-main">
-      <AddedToast />
-      <div className="mx-auto max-w-md px-5 py-8">
+        <AddedToast />
 
-        <header>
-          <h1 className="mt-1 text-3xl font-bold text-white">
-            Augutst
-          </h1>
-        </header>
+        <div className="mx-auto max-w-md px-5 pt-8 pb-[140px]">
+            <div className="mx-auto max-w-md px-5 py-8">
+              <header>
+                <h1 className="mt-1 text-3xl font-bold text-white">
+                  {currentMonth}
+                </h1>
+              </header>
 
-        <section className="mt-6 rounded-3xl bg-surface p-6 shadow-sm">
-          <p className="text-base text-text-main">
-            Total
-          </p>
+              <section className="mt-6 rounded-3xl bg-surface p-6 shadow-sm">
+                <p className="text-base text-text-main">
+                  Total
+                </p>
 
-          <h2 className="mt-2 text-4xl font-semibold">
-            RM {monthlyTotal}
-          </h2>
-        </section>
+                <h2 className="mt-2 text-4xl font-semibold">
+                  RM {monthlyTotal}
+                </h2>
+              </section>
 
-        <section className="mt-5 rounded-3xl bg-surface p-6 shadow-sm">
-          <p className="text-base font-medium text-text-main">
-            Category
-          </p>
+              <section className="mt-5 rounded-3xl bg-surface p-6 shadow-sm">
+                <p className="text-base font-medium text-text-main">
+                  Category
+                </p>
 
-          <div className="mt-5 w-full">
-            <CategoryPieChart data={categoryData} />
-          </div>
-        </section>
+                <div className="mt-5 w-full">
+                  <CategoryPieChart data={categoryData} />
+                </div>
+              </section>
 
-        <section className="mt-5 rounded-3xl bg-surface p-6 shadow-sm">
-          <h3 className="text-lg font-semibold text-text-main">
-            Expense List
-          </h3>
+              <section className="mt-5 rounded-3xl bg-surface p-6 shadow-sm">
+                <h3 className="text-lg font-semibold text-text-main">
+                  Expense List
+                </h3>
 
-          <div className="mt-4 border-t border-line pt-4">
-            {expenses.length === 0 ? (
-              <p className="py-6 text-center text-sm text-text-sub">
-                No expenses yet
-              </p>
-            ) : (
-              expenses.map((expense, index) => {
-                const date = new Date(expense.date);
+                <div className="mt-4 border-t border-line pt-4">
+                  {expenses.length === 0 ? (
+                    <p className="py-6 text-center text-sm text-text-sub">
+                      No expenses yet
+                    </p>
+                  ) : (
+                    expenses.map((expense, index) => {
+                      const date = new Date(expense.date);
 
-                const formattedDate = date.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                });
+                      const formattedDate = date.toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      });
 
-                return (
-                  <div key={expense.id}>
-                      <div className="flex items-center justify-between gap-4 py-3">
-                          
-                          {/* Left */}
-                          <div className="min-w-0">
-                              <p className="truncate font-medium text-text-main">
-                                  {expense.title}
-                              </p>
+                    return (
+                    <div key={expense.id}>
+                        <div className="flex items-center justify-between gap-4 py-3">
+                           
+                            {/* Left */}
+                            <div className="min-w-0">
+                                <p className="truncate font-medium text-text-main">
+                                    {expense.title}
+                                </p>
 
-                              <p className="mt-1 text-xs text-text-sub">
-                                  {formattedDate} ・ {expense.category} ・ {expense.paid_by}
-                              </p>
+                                <p className="mt-1 text-xs text-text-sub">
+                                    {formattedDate} ・ {expense.category} ・ {expense.paid_by}
+                                </p>
+                            </div>
+
+                            {/* Right */}
+                            <p className="shrink-0 font-semibold text-primary">
+                                RM {Number(expense.amount).toFixed(2)}
+                            </p>
                           </div>
-
-                          {/* Right */}
-                          <p className="shrink-0 font-semibold text-primary">
-                              RM {Number(expense.amount).toFixed(2)}
-                          </p>
-
-                      </div>
-
-                      {index !== expenses.length - 1 && (
-                          <div className="border-t border-line" />
-                      )}
-                  </div>
-              );
-              })
-            )}
+                        {index !== expenses.length - 1 && (
+                            <div className="border-t border-line" />
+                        )}
+                    </div>
+                  );
+                })
+              )}
+              </div>
+            </section>
           </div>
-        </section>
+        </div>
       </div>
-    </div>
   );
 }

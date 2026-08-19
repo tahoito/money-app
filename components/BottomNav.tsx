@@ -26,7 +26,7 @@ export default function BottomNavigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-1/2 flex h-20 w-full max-w-md -translate-x-1/2 items-center justify-around border-t border-line bg-surface">
+    <nav className="fixed bottom-0 left-1/2 z-50 flex h-20 w-full max-w-md -translate-x-1/2 items-center justify-around border-t border-line bg-surface">
       {navItems.map((item) => {
         const Icon = item.icon;
         const active = pathname === item.href;

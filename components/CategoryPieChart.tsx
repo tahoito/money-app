@@ -71,7 +71,7 @@ export default function CategoryPieChart({
 
             {/* Category Legend */}
             <div className="mt-2 space-y-3">
-                {data.map((item, index) => (
+                {chartData.map((item, index) => (
                     <div
                         key={item.category}
                         className="flex items-center justify-between"

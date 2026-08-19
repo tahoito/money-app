@@ -21,7 +21,7 @@ export default async function Add() {
     `;
 
     return (
-        <main className="min-h-screen bg-base px-5 pb-28 pt-6">
+        <main className="min-h-screen bg-base px-5 pt-6 pb-[120px]">
             <div className="mx-auto w-full max-w-md">
                 {/* Header */}
                 <header className="relative flex items-center justify-center">
