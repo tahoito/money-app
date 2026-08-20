@@ -1,10 +1,18 @@
+import { sql } from "@/lib/db";
 import {
     CalendarDays,
     ChevronDown,
     SearchIcon,
 } from "lucide-react";
 
-export default function Search() {
+export default async function Search() {
+    const categories = await sql`
+        SELECT id, name
+        FROM categories
+        ORDER BY id
+    `;
+
+
     return (
         <main className="min-h-screen bg-base px-5 pt-6 pb-[120px]">
             <div className="mx-auto w-full max-w-md">
@@ -26,8 +34,8 @@ export default function Search() {
 
                         <input
                             type="text"
+                            name="keyword"
                             placeholder="Search by content (Dinner, Grab...)"
-                            className="w-full rounded-xl border border-line bg-surface py-3 pl-12 pr-4 text-sm text-text-main placeholder:text-text-sub outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                         />
                     </div>
 
@@ -39,9 +47,9 @@ export default function Search() {
                         <div className="relative">
                             <input
                                 type="date"
+                                name="from"
                                 className="w-full rounded-xl border border-line bg-surface px-4 py-3 pr-10 text-sm text-text-main outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                             />
-
                             <CalendarDays className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-sub" />
                         </div>
 
@@ -50,6 +58,7 @@ export default function Search() {
                         <div className="relative">
                             <input
                                 type="date"
+                                name="to"
                                 className="w-full rounded-xl border border-line bg-surface px-4 py-3 pr-10 text-sm text-text-main outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                             />
 
@@ -67,17 +76,21 @@ export default function Search() {
 
                             <div className="relative">
                                 <select
-                                    defaultValue="All"
-                                    className="w-full appearance-none rounded-xl border border-line bg-surface px-4 py-3 pr-10 text-sm text-text-main outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                                    name="category"
+                                    defaultValue=""
+                                    className="w-full appearance-none rounded-xl border border-line bg-surface px-4 py-3 pr-10 text-base text-text-main outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                                 >
-                                    <option>All</option>
-                                    <option>Food</option>
-                                    <option>Transport</option>
-                                    <option>Shopping</option>
-                                    <option>Entertainment</option>
-                                    <option>Other</option>
-                                </select>
+                                    <option value="">All</option>
 
+                                    {categories.map((category) => (
+                                        <option
+                                            key={category.id}
+                                            value={category.id}
+                                        >
+                                            {category.name}
+                                        </option>
+                                    ))}
+                                </select>
                                 <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-sub" />
                             </div>
                         </div>
@@ -89,7 +102,7 @@ export default function Search() {
                             </label>
 
                             <div className="relative">
-                                <select
+                                <select name="amount"
                                     defaultValue="All"
                                     className="w-full appearance-none rounded-xl border border-line bg-surface px-4 py-3 pr-10 text-sm text-text-main outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                                 >
@@ -108,7 +121,7 @@ export default function Search() {
 
                     {/* Search Button */}
                     <button
-                        type="button"
+                        type="submit"
                         className="mt-5 w-full rounded-xl bg-primary py-3.5 text-sm font-semibold text-white transition hover:bg-primary-hover active:scale-[0.99]"
                     >
                         Search
