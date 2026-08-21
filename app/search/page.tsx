@@ -5,11 +5,48 @@ import {
     SearchIcon,
 } from "lucide-react";
 
-export default async function Search() {
+type SearchParams = {
+    keyword?: string,
+    from?: string,
+    to?: string,
+    category?: string,
+    amount?: string,
+}
+
+export default async function Search({
+    searchParams,
+} : {
+    searchParams: Promise<SearchParams>;
+}) {
+
+    const params = await searchParams;
+
+    const keyword = params.keyword ?? "";
+    const from = params.from ?? "";
+    const to = params.to ?? "";
+    const category = params.category ?? "";
+    const amount = params.amount ?? "";
+
     const categories = await sql`
         SELECT id, name
         FROM categories
         ORDER BY id
+    `;
+
+    const expenses = await sql`
+        SELECT
+            expenses.id, expenses.date,
+            expenses.title, expenses.amount,
+            categories.name AS category,
+            users.name AS paid_by
+        FROM expenses
+        JOIN categories
+            ON expenses.category_id = categories.id
+        JOIN users
+            ON expenses.paid_id = users.id
+        WHERE 
+            (
+        ) 
     `;
 
 
